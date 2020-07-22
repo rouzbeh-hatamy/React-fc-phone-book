@@ -7,20 +7,47 @@ function Container() {
     const [animateForm, SetAnimateForm] = useState(null);
     const [showForm, setShowForm] = useState(false);
     const [search, setSearch] = useState('');
-    let filtered = this.state.contacts.filter(item => item.name.toLowerCase().startsWith(this.state.search.toLowerCase()))
-    
+    const [filtered, setFiltered] = useState([]);
+
     const handelChange = event => {
         const { value } = event.target;
         setSearch(value);
     }
+
+    const handleDelete = (id) => {
+        setContacts(contacts.filter(contact => contact.id !== id))
+    }
+
+    const toggleForm = () => {
+        if (showForm) {
+            SetAnimateForm(false)
+            setTimeout(() => {
+                setShowForm(false)
+            }, 1000)
+        } else {
+            SetAnimateForm(true);
+            setShowForm(true)
+        }
+    }
+
+    const handleAdd = (obj) => {
+        setContacts([...contacts, obj])
+    }
+
+
+    useEffect(() => {
+        setFiltered(contacts.filter(item => item.name.toLowerCase().startsWith(search.toLowerCase())))
+    }, [search, contacts])
+
+    
     return (
         <div className={`contain ${animateForm ? 'open-Form' : 'hide-form'}`}>
             <input type="text" name="search" onChange={handelChange} value={search} placeholder="search" />
             <div className="all">
-                <Table contacts={filtered} handleDelete={this.handleDelete} showForm={this.state.showForm} toggleForm={this.toggleForm} />
+                <Table contacts={filtered} handleDelete={handleDelete} showForm={showForm} toggleForm={toggleForm} />
 
                 {
-                    showForm ? <Form handleAdd={this.handleAdd} toggleForm={this.toggleForm} lastId={contacts[contacts.length - 1].id} /> : null
+                    showForm ? <Form handleAdd={handleAdd} toggleForm={toggleForm} lastId={contacts[contacts.length - 1].id} /> : null
 
                 }
             </div>
