@@ -26,10 +26,19 @@ function Container() {
         setEditContact(contact)
     }
     const updateContact = (contact) => {
-        // let tempContact = contacts;
-        //  tempContact.map(item => contact.id === item.id ? tempContact = contact: null )
-        // setContacts(tempContact)
-        console.log('1');
+        let tempContact = contacts;
+         tempContact.map(item => {if(item.id===contact.id){
+             item.id=contact.id
+             item.name =contact.name
+             item.username=contact.username
+             item.phone=contact.phone
+             item.email=contact.email
+             item.company=contact.company
+             item.website=contact.website
+             return item;
+         }else return item
+        } )
+        setContacts(tempContact)
     }
     const toggleForm = () => {
         if (showForm) {
@@ -49,7 +58,6 @@ function Container() {
 
 
     useEffect(() => {
-        console.log('contacts');
         setFiltered(contacts.filter(item => item.name.toLowerCase().startsWith(search.toLowerCase())))
     }, [search, contacts])
 

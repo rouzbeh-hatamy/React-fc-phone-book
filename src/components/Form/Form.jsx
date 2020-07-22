@@ -13,9 +13,14 @@ function Form(props) {
         website: '',
     })
     const [ids, setIds] = useState([]);
+    
     const handleChange = (event) => {
         const { name, value } = event.target;
+        if(props.editmode){
+            setNewContact({...newContact,[name]:value})
+        }else{
         setNewContact({ ...newContact, id: props.lastId + 1, [name]: value });
+        }
     }
 
     const handlesubmit = (event) => {
@@ -26,6 +31,13 @@ function Form(props) {
         } else if (ids.includes(newContact.id)) {
             props.updateContact(newContact)
             props.toggleForm()
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: 'به روز رساني شد',
+                showConfirmButton: false,
+                timer: 1500
+            })
         } else {
             props.handleAdd(newContact)
             props.toggleForm();
@@ -39,6 +51,8 @@ function Form(props) {
         }
 
     }
+
+
     useEffect(() => {
         if (props.editmode) {
             setNewContact(props.editContact)
