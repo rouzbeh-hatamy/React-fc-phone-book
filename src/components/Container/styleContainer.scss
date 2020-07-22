@@ -1,0 +1,74 @@
+.all {
+  display: flex;
+}
+.contain {
+  min-height: 100vh;
+  background-image: linear-gradient(
+    to right top,
+    #006775,
+    #00858d,
+    #00a49c,
+    #00c3a1,
+    #00e29e
+  );
+  background-attachment: fixed;
+  display: flex;
+  flex-direction: column;
+  font-family: Shabnam;
+  input {
+    width: 200px;
+    align-self: center;
+    border-radius: 20px;
+    outline: none;
+  }
+}
+.hide-form {
+  #form {
+    animation: close 1.1s;
+    position: fixed;
+    right: 0;
+  }
+}
+.open-Form {
+  table {
+    opacity: 0.5;
+    filter: grayscale(100%);
+    pointer-events: none;
+    transition: all 0.5s;
+  }
+  #form {
+    width: auto;
+    animation: showFrom 1s;
+    position: fixed;
+    right: 0;
+  }
+}
+@keyframes showFrom {
+  0% {
+    transform: translateX(250px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+@keyframes close {
+  0% {
+    transform: translateX(0px);
+  }
+  100% {
+    transform: translateX(250px);
+  }
+}
+@font-face {
+  font-family: Shabnam;
+  src: url("https://cdn.fontcdn.ir/Font/Persian/Shabnam/Shabnam.eot");
+  src: url("https://cdn.fontcdn.ir/Font/Persian/Shabnam/Shabnam.eot?#iefix")
+      format("embedded-opentype"),
+    url("https://cdn.fontcdn.ir/Font/Persian/Shabnam/Shabnam.woff2")
+      format("woff2"),
+    url("https://cdn.fontcdn.ir/Font/Persian/Shabnam/Shabnam.woff")
+      format("woff"),
+    url("https://cdn.fontcdn.ir/Font/Persian/Shabnam/Shabnam.ttf")
+      format("truetype");
+  font-weight: normal;
+}
