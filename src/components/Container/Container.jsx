@@ -4,12 +4,13 @@ import Form from '../Form/Form'
 import './styleContainer.scss'
 function Container() {
     const [firstTime, setFirstTime] = useState(true)
+    const [editContact, setEditContact] = useState({})
     const [contacts, setContacts] = useState([]);
     const [animateForm, SetAnimateForm] = useState(null);
     const [showForm, setShowForm] = useState(false);
     const [search, setSearch] = useState('');
     const [filtered, setFiltered] = useState([]);
-
+    const [editmode, setEditmode] = useState(false)
 
     const handelChange = event => {
         const { value } = event.target;
@@ -19,7 +20,17 @@ function Container() {
     const handleDelete = (id) => {
         setContacts(contacts.filter(contact => contact.id !== id))
     }
-
+    const handleEdit = (contact) => {
+        toggleForm();
+        setEditmode(true)
+        setEditContact(contact)
+    }
+    const updateContact = (contact) => {
+        // let tempContact = contacts;
+        //  tempContact.map(item => contact.id === item.id ? tempContact = contact: null )
+        // setContacts(tempContact)
+        console.log('1');
+    }
     const toggleForm = () => {
         if (showForm) {
             SetAnimateForm(false)
@@ -38,28 +49,28 @@ function Container() {
 
 
     useEffect(() => {
-        console.log(contacts);
+        console.log('contacts');
         setFiltered(contacts.filter(item => item.name.toLowerCase().startsWith(search.toLowerCase())))
     }, [search, contacts])
 
     useEffect(() => {
         if (firstTime) {
             fetch('https://jsonplaceholder.ir/users/')
-            .then(response => response.json())
-            .then(data => { setContacts(data)});
+                .then(response => response.json())
+                .then(data => { setContacts(data) });
             setFirstTime(false)
         } else { return }
-    }, [firstTime],)
+    }, [firstTime])
 
 
     return (
         <div className={`contain ${animateForm ? 'open-Form' : 'hide-form'}`}>
             <input type="text" name="search" onChange={handelChange} value={search} placeholder="search" />
             <div className="all">
-                <Table contacts={filtered} handleDelete={handleDelete} showForm={showForm} toggleForm={toggleForm} />
+                <Table contacts={filtered} handleDelete={handleDelete} handleEdit={handleEdit} showForm={showForm} toggleForm={toggleForm} />
 
                 {
-                    showForm ? <Form handleAdd={handleAdd} toggleForm={toggleForm} lastId={contacts[contacts.length - 1].id} /> : null
+                    showForm ? <Form handleAdd={handleAdd} editmode={editmode} updateContact={updateContact} editContact={editContact} contacts={contacts} toggleForm={toggleForm} lastId={contacts[contacts.length - 1].id} /> : null
 
                 }
             </div>

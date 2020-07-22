@@ -4,7 +4,7 @@ import './TableStyle.scss'
 function table(props) {
 
 
-        const { contacts, showForm, toggleForm } = props
+        const { contacts, showForm, toggleForm,handleEdit } = props
         return (
             <div id="table" className="table-responsive">
                 <table className="table table-striped table-hover">
@@ -22,7 +22,7 @@ function table(props) {
                     </thead>
                     <tbody>
                         {contacts.map((item) => (
-                            <Tbody key={item.id} contact={item} handleDelete={() => props.handleDelete(item.id)} />))}
+                            <Tbody key={item.id} contact={item} handleEdit={handleEdit} handleDelete={() => props.handleDelete(item.id)} />))}
                     </tbody>
                 </table>
                 <button className="btn btn-success mx-4 " onClick={toggleForm}>{showForm ? 'close' : 'add'}</button>

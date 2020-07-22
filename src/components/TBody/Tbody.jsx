@@ -22,7 +22,7 @@ function Tbody(props)  {
     })
       
   }
-    const { contact } = props
+    const { contact,handleEdit } = props
 
     return (
 
@@ -35,7 +35,7 @@ function Tbody(props)  {
         <td>{contact.company}</td>
         <td>{contact.website}</td>
         <td className="buttons"><button type="button" onClick={()=>deleteItem(contact.name)} className="btn btn-danger">delete</button>
-          <button type="button" className="btn btn-primary">edit</button> </td>
+          <button type="button" className="btn btn-primary" onClick={()=>handleEdit(contact)}>edit</button> </td>
       </tr>
 
     );
