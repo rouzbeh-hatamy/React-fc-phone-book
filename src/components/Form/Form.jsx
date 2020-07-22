@@ -1,46 +1,44 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import './Form.scss';
 import Swal from 'sweetalert2';
 
 function Form(props) {
-    state = {
+    const[newContact,setNewContact]=useState({
+        id:1,
         name: '',
         username: '',
         phone: '',
         email: '',
         company: '',
         website: '',
-    }
-    handleChange = (event) => {
+    })
+    const handleChange = (event) => {
         const { name, value } = event.target;
-        this.setState({ [name]: value });
-
+        setNewContact({[name]:value})
+        setNewContact({id:props.lastId + 1})
     }
-    submitForm = (e) => {
+    const submitForm = (e) => {
         Swal.fire(
-            this.handlesubmit(e),
+            handlesubmit(e),
             'اضافه شد',
             'success'
         )
     }
-    handlesubmit = (event) => {
+    const handlesubmit = (event) => {
         event.preventDefault();
-        const { name, username, phone, email, company, website } = this.state
+        const { name, username, phone, email, company, website } = newContact
         if ((name && username && phone && email && company && website) === '') {
-            alert(' form cannot be empty')
+            alert(' هيچ ورودي نبايد خالي باشد')
         } else {
-            const id = this.props.lastId + 1
-            const newContact = { id, name, username, phone, email, company, website }
-            this.props.handleAdd(newContact)
-            this.props.toggleForm();
+            props.handleAdd(newContact)
+            props.toggleForm();
         }
 
     }
-    render() {
-        const { name, username, phone, email, company, website } = this.state
+        const { name, username, phone, email, company, website } = newContact
         return (
             <div id="form">
-                <form id="form_contact" onSubmit={this.submitForm}>
+                <form id="form_contact" onSubmit={submitForm}>
                     <div className="form-group">
                         <label htmlFor="id_name">name</label>
                         <input
@@ -48,7 +46,7 @@ function Form(props) {
                             className="form-control"
                             id="id_name"
                             name="name"
-                            onChange={this.handleChange} value={name}
+                            onChange={handleChange} value={name}
                         />
                     </div>
                     <div className="form-group">
@@ -58,7 +56,7 @@ function Form(props) {
                             className="form-control"
                             id="id_last_name"
                             name="username"
-                            onChange={this.handleChange} value={username}
+                            onChange={handleChange} value={username}
                         />
                     </div>
                     <div className="form-group">
@@ -68,7 +66,7 @@ function Form(props) {
                             className="form-control"
                             id="id_Phone_number"
                             name="phone"
-                            onChange={this.handleChange} value={phone}
+                            onChange={handleChange} value={phone}
                         /></div>
                     <div className="form-group">
                         <label htmlFor="id_email">email</label>
@@ -77,7 +75,7 @@ function Form(props) {
                             className="form-control"
                             id="id_email"
                             name="email"
-                            onChange={this.handleChange} value={email}
+                            onChange={handleChange} value={email}
                         />
                     </div>
 
@@ -88,7 +86,7 @@ function Form(props) {
                             className="form-control"
                             id="id_company"
                             name="company"
-                            onChange={this.handleChange} value={company}
+                            onChange={handleChange} value={company}
                         />
                     </div>
                     <div className="form-group">
@@ -98,14 +96,14 @@ function Form(props) {
                             className="form-control"
                             id="id_website"
                             name="website"
-                            onChange={this.handleChange} value={website}
+                            onChange={handleChange} value={website}
                         />
                     </div>
                     <button type="submit" className="btn btn-primary">Submit</button>
                 </form>
             </div>
         );
-    }
+    
 }
 
 export default Form;

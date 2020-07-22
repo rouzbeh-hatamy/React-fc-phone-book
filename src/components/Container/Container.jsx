@@ -38,8 +38,12 @@ function Container() {
     useEffect(() => {
         setFiltered(contacts.filter(item => item.name.toLowerCase().startsWith(search.toLowerCase())))
     }, [search, contacts])
+    useEffect(()=>{
+        fetch('https://jsonplaceholder.ir/users/')
+        .then(response => response.json())
+        .then(data=>setContacts(data))
+    })
 
-    
     return (
         <div className={`contain ${animateForm ? 'open-Form' : 'hide-form'}`}>
             <input type="text" name="search" onChange={handelChange} value={search} placeholder="search" />
