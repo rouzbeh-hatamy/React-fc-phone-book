@@ -3,11 +3,13 @@ import Table from '../Table/Table'
 import Form from '../Form/Form'
 import './styleContainer.scss'
 function Container() {
+    const [firstTime, setFirstTime] = useState(true)
     const [contacts, setContacts] = useState([]);
     const [animateForm, SetAnimateForm] = useState(null);
     const [showForm, setShowForm] = useState(false);
     const [search, setSearch] = useState('');
     const [filtered, setFiltered] = useState([]);
+
 
     const handelChange = event => {
         const { value } = event.target;
@@ -38,11 +40,16 @@ function Container() {
     useEffect(() => {
         setFiltered(contacts.filter(item => item.name.toLowerCase().startsWith(search.toLowerCase())))
     }, [search, contacts])
-    useEffect(()=>{
-        fetch('https://jsonplaceholder.ir/users/')
-        .then(response => response.json())
-        .then(data=>setContacts(data))
-    })
+
+    useEffect(() => {
+        if (firstTime) {
+            fetch('https://jsonplaceholder.ir/users/')
+            .then(response => response.json())
+            .then(data => { setContacts(data)});
+            setFirstTime(false)
+        } else { return }
+    }, [firstTime],)
+
 
     return (
         <div className={`contain ${animateForm ? 'open-Form' : 'hide-form'}`}>
