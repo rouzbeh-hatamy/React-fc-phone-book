@@ -14,8 +14,7 @@ function Form(props) {
     })
     const handleChange = (event) => {
         const { name, value } = event.target;
-        setNewContact({[name]:value})
-        setNewContact({id:props.lastId + 1})
+        setNewContact({...newContact,id:props.lastId + 1,[name]:value})
     }
     const submitForm = (e) => {
         Swal.fire(

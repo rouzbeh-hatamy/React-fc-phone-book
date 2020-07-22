@@ -38,6 +38,7 @@ function Container() {
 
 
     useEffect(() => {
+        console.log(contacts);
         setFiltered(contacts.filter(item => item.name.toLowerCase().startsWith(search.toLowerCase())))
     }, [search, contacts])
 

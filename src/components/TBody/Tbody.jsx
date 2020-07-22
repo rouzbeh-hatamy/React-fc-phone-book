@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import Swal from 'sweetalert2'
 
 function Tbody(props)  {
